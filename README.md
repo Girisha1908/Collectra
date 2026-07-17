@@ -4,6 +4,8 @@ Collectra is a package storage, tracking, and secure retrieval platform.
 Designed for residential buildings, university hostels, and corporate departments, 
 it ensures that incoming packages (orders) are securely logged by staff, tracked, and released only to the authenticated recipient via SMS-based OTP verification.
 
+🌐 **Live Deployment:** [https://collectra-kappa.vercel.app](https://collectra-kappa.vercel.app)
+
 ---
 
 ## 🚀 Key Features
