@@ -16,7 +16,8 @@ async function main() {
   const schemaPath = path.join(__dirname, "..", "db", "schema.sql");
   const sql = fs.readFileSync(schemaPath, "utf8");
 
-  const client = new pg.Client({ connectionString: url });
+  const ssl = process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : undefined;
+  const client = new pg.Client({ connectionString: url, ssl });
   await client.connect();
   try {
     await client.query(sql);
