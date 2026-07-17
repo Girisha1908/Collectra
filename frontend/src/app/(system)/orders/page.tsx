@@ -77,8 +77,9 @@ export default function OrdersPage() {
     try {
       await api.post(`/api/orders/${orderId}/remind`);
       toast({ title: "Reminder sent", description: "SMS reminder was successfully dispatched." });
-    } catch (err) {
-      toast({ title: "Failed to send reminder", variant: "destructive" });
+    } catch (err: any) {
+      const errMsg = err.response?.data?.error || "SMS reminder could not be dispatched.";
+      toast({ title: "Failed to send reminder", description: errMsg, variant: "destructive" });
     }
   };
 

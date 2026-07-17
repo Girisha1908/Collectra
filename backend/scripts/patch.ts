@@ -16,8 +16,7 @@ async function main() {
   const patchesDir = path.join(__dirname, "..", "db", "patches");
   const files = fs.readdirSync(patchesDir).filter((f) => f.endsWith(".sql")).sort();
 
-  const ssl = process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : undefined;
-  const client = new pg.Client({ connectionString: url, ssl });
+  const client = new pg.Client({ connectionString: url });
   await client.connect();
   try {
     for (const file of files) {

@@ -251,9 +251,14 @@ export async function remind(req: Request, res: Response): Promise<void> {
   const row = await orderModel.findByPublicOrderId(orderId);
   if (!row) throw new HttpError(404, "order not found");
   
-  await smsService.sendReminderSms(String(row.phone_number), orderId);
-  await orderModel.updateLastReminded(orderId);
-  res.json({ success: true, message: "Reminder sent" });
+  try {
+    await smsService.sendReminderSms(String(row.phone_number), orderId);
+    await orderModel.updateLastReminded(orderId);
+    res.json({ success: true, message: "Reminder sent" });
+  } catch (smsErr: any) {
+    console.error(`[Manual Reminder Failed] Order ID ${orderId}:`, smsErr);
+    throw new HttpError(400, `SMS delivery failed: ${smsErr.message || smsErr}`);
+  }
 }
 
 export async function updateRack(req: Request, res: Response): Promise<void> {
