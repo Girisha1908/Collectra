@@ -1,0 +1,17 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "qr-code",
+      "description": "Simulated QR Code",
+      "imageUrl": "https://picsum.photos/seed/qr123/400/400",
+      "imageHint": "qr code"
+    },
+    {
+      "id": "collectra-logo",
+      "description": "Collectra Brand Logo",
+      "imageUrl": "https://picsum.photos/seed/collectra/200/200",
+      "imageHint": "security shield"
+    }
+  ]
+}
