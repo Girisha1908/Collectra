@@ -1,6 +1,8 @@
-# 📦 Collectra — Secure Package Intake & Retrieval System
+# 📦 Collectra - Secure Package Retrieval System
 
-Collectra is an enterprise-grade package storage, tracking, and secure retrieval platform. Designed for residential buildings, university hostels, and corporate departments, it ensures that incoming packages (orders) are securely logged by staff, tracked, and released only to the authenticated recipient via SMS-based OTP verification.
+Collectra is a package storage, tracking, and secure retrieval platform. 
+Designed for residential buildings, university hostels, and corporate departments, 
+it ensures that incoming packages (orders) are securely logged by staff, tracked, and released only to the authenticated recipient via SMS-based OTP verification.
 
 ---
 
