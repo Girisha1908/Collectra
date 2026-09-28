@@ -1,0 +1,32 @@
+name: Keep demo alive
+
+# Pings the Render backend so the free instance doesn't spin down,
+# and touches the database so the Supabase free project doesn't pause.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping API health
+        run: curl -fsS --retry 3 --retry-delay 20 --max-time 90 https://collectra-api.onrender.com/health
+
+      - name: Ping database health
+        run: curl -fsS --retry 3 --retry-delay 20 --max-time 90 https://collectra-api.onrender.com/health/db
+
+      - name: Ping frontend
+        run: curl -fsS -o /dev/null --max-time 60 https://collectra-kappa.vercel.app
+
+      # GitHub disables scheduled workflows after 60 days without repo activity; re-enabling resets that.
+      - name: Keep schedule enabled
+        if: github.event.schedule == '*/10 * * * *' && github.run_number % 144 == 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keep-alive.yml/enable"

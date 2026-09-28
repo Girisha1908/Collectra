@@ -3,6 +3,7 @@ import cors from "cors";
 import cron from "node-cron";
 import express from "express";
 import helmet from "helmet";
+import { getPool } from "./config/db.js";
 import { runOverdueJob } from "./jobs/overdueJob.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { requireAuth } from "./middleware/authMiddleware.js";
@@ -33,6 +34,16 @@ app.get("/", (_req, res) => {
 
 app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "collectra-api" });
+});
+
+// Touches the database so hosted Postgres (e.g. Supabase free tier) doesn't pause from inactivity
+app.get("/health/db", async (_req, res) => {
+  try {
+    await getPool().query("SELECT 1");
+    res.json({ ok: true, db: true });
+  } catch {
+    res.status(503).json({ ok: false, db: false });
+  }
 });
 
 app.use("/api/auth", authRoutes);
